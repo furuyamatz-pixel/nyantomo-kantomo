@@ -1,0 +1,7 @@
+node_modules
+dist
+.vite
+*.local
+hivz_cyber_anime_girl_blockout.blend
+hivz_cyber_anime_girl_rigging_base.blend
+character_reference_for_generation.jpg
