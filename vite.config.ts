@@ -15,15 +15,15 @@ export default defineConfig({
         short_name: "にゃんとも",
         description: "猫の頭と体をそろえてお掃除するマッチパズル",
         lang: "ja",
-        start_url: "/",
-        scope: "/",
+        start_url: base,
+        scope: base,
         display: "standalone",
         orientation: "portrait",
         background_color: "#f7efe5",
         theme_color: "#87cbb9",
         icons: [
           {
-            src: "/pwa-icon.svg",
+            src: `${base}pwa-icon.svg`,
             sizes: "any",
             type: "image/svg+xml",
             purpose: "any maskable",

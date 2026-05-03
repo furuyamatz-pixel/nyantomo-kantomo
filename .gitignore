@@ -1,5 +1,6 @@
 node_modules
 dist
+dev-dist
 .vite
 *.local
 hivz_cyber_anime_girl_blockout.blend
