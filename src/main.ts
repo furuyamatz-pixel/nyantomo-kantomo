@@ -76,6 +76,7 @@ const app = new Application();
 await app.init({
   backgroundAlpha: 0,
   resizeTo: window,
+  preference: "webgl",
   antialias: true,
   autoDensity: true,
   resolution: Math.min(window.devicePixelRatio || 1, 2),
