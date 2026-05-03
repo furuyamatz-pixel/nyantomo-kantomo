@@ -6,6 +6,11 @@ import {
   Text,
   TextStyle,
 } from "pixi.js";
+import "pixi.js/browser";
+import "pixi.js/app";
+import "pixi.js/events";
+import "pixi.js/graphics";
+import "pixi.js/text";
 import "./styles.css";
 
 const COLS = 6;
@@ -72,17 +77,34 @@ const CATS: Cat[] = [
   { id: "sabi", name: "サビ", color: 0x775244, accent: 0xd0a35c, mark: "ビ" },
 ];
 
-const app = new Application();
-await app.init({
-  backgroundAlpha: 0,
-  resizeTo: window,
-  preference: "webgl",
-  antialias: true,
-  autoDensity: true,
-  resolution: Math.min(window.devicePixelRatio || 1, 2),
-});
+const appElement = document.querySelector<HTMLDivElement>("#app");
+const startupStatus = document.createElement("div");
+startupStatus.className = "startup-status";
+startupStatus.textContent = "ゲームを起動中...";
+appElement?.appendChild(startupStatus);
 
-document.querySelector<HTMLDivElement>("#app")?.appendChild(app.canvas);
+const app = new Application();
+try {
+  await Promise.race([
+    app.init({
+      backgroundAlpha: 0,
+      resizeTo: window,
+      manageImports: false,
+      preference: ["canvas"],
+      antialias: true,
+      autoDensity: true,
+      resolution: Math.min(window.devicePixelRatio || 1, 2),
+    }),
+    wait(15000).then(() => {
+      throw new Error("PixiJS initialization timed out");
+    }),
+  ]);
+  startupStatus.remove();
+  appElement?.appendChild(app.canvas);
+} catch (error) {
+  showStartupError(error);
+  throw error;
+}
 
 const scene = new Container();
 const boardLayer = new Container();
@@ -970,6 +992,12 @@ function clamp(value: number, min: number, max: number): number {
 
 function wait(ms: number): Promise<void> {
   return new Promise(resolve => window.setTimeout(resolve, ms));
+}
+
+function showStartupError(error: unknown): void {
+  const message = error instanceof Error ? error.message : String(error);
+  startupStatus.className = "startup-status error";
+  startupStatus.textContent = `起動に失敗しました: ${message}`;
 }
 
 window.addEventListener("resize", layout);

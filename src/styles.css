@@ -32,3 +32,25 @@ canvas {
   height: 100%;
   touch-action: none;
 }
+
+.startup-status {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  width: min(86vw, 420px);
+  padding: 18px 20px;
+  border: 2px solid rgba(42, 37, 40, 0.16);
+  border-radius: 8px;
+  background: rgba(255, 253, 248, 0.9);
+  color: #2a2528;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1.6;
+  text-align: center;
+  transform: translate(-50%, -50%);
+}
+
+.startup-status.error {
+  border-color: rgba(216, 92, 111, 0.4);
+  color: #8f2f42;
+}
